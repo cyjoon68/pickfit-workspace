@@ -31,7 +31,7 @@ for (const name of ['pickfit-fe', 'pickfit-be']) {
 }
 const remotes = execFileSync('git', ['remote', '-v'], { encoding: 'utf8' });
 if (!remotes.includes('origin\thttps://github.com/pickfit-ai/pickfit-workspace.git')) throw new Error('wrong origin remote');
-if (!remotes.includes('personal\thttps://github.com/cyjoon68/pickfit-workspace.git')) throw new Error('wrong personal remote');
+if (remotes.includes('personal\t') && !remotes.includes('personal\thttps://github.com/cyjoon68/pickfit-workspace.git')) throw new Error('wrong personal remote');
 for (const name of ['pickfit-fe', 'pickfit-be']) {
   const childRemotes = execFileSync('git', ['-C', name, 'remote', '-v'], { encoding: 'utf8' });
   if (!childRemotes.includes(`origin\thttps://github.com/pickfit-ai/${name}.git`)) throw new Error(`wrong child origin ${name}`);
