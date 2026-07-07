@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pickfit-be
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pickfit-be
+  template:
+    metadata:
+      labels:
+        app: pickfit-be
+        tags.datadoghq.com/service: pickfit-be
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/pickfit-ai/pickfit-be:develop
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: pickfit-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pickfit-be
+spec:
+  selector:
+    app: pickfit-be
+  ports:
+    - port: 8080
+      targetPort: 8080

@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: pickfit
+      MYSQL_USER: pickfit
+      MYSQL_PASSWORD: pickfit
+      MYSQL_ROOT_PASSWORD: pickfit
+    ports:
+      - "33064:3306"
+  redis:
+    image: redis:7
+    ports:
+      - "63794:6379"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "56724:5672"
+      - "15674:15672"

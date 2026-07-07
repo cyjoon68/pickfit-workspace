@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pickfit
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/pickfit-ai/pickfit-workspace.git
+    targetRevision: develop
+    path: deploy/k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: pickfit
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
