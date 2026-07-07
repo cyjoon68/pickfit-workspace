@@ -1,8 +1,8 @@
-[submodule "apps/web"]
-	path = apps/web
+[submodule "pickfit-fe"]
+	path = pickfit-fe
 	url = https://github.com/pickfit-ai/pickfit-fe.git
 	branch = develop
-[submodule "services/api"]
-	path = services/api
+[submodule "pickfit-be"]
+	path = pickfit-be
 	url = https://github.com/pickfit-ai/pickfit-be.git
 	branch = develop
