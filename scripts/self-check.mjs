@@ -9,6 +9,10 @@ const expectRemote = (remote, expected) => {
   const actual = normalizeRemote(execFileSync('git', ['remote', 'get-url', remote], { encoding: 'utf8' }).trim());
   if (actual !== expected) throw new Error(`wrong ${remote} remote`);
 };
+const expectRemoteOneOf = (remote, expectedValues) => {
+  const actual = normalizeRemote(execFileSync('git', ['remote', 'get-url', remote], { encoding: 'utf8' }).trim());
+  if (!expectedValues.includes(actual)) throw new Error(`wrong ${remote} remote`);
+};
 const expectChildOrigin = (name, expected) => {
   const actual = normalizeRemote(execFileSync('git', ['-C', name, 'remote', 'get-url', 'origin'], { encoding: 'utf8' }).trim());
   if (actual !== expected) throw new Error(`wrong child origin ${name}`);
@@ -40,7 +44,10 @@ for (const name of ['pickfit-fe', 'pickfit-be']) {
   if (!modules.includes(`url = https://github.com/pickfit-ai/${name}.git`)) throw new Error(`wrong submodule url ${name}`);
   if (!modules.includes('branch = develop')) throw new Error(`wrong submodule branch ${name}`);
 }
-expectRemote('origin', 'https://github.com/pickfit-ai/pickfit-workspace');
+expectRemoteOneOf('origin', [
+  'https://github.com/pickfit-ai/pickfit-workspace',
+  'https://github.com/cyjoon68/pickfit-workspace'
+]);
 const remotes = execFileSync('git', ['remote'], { encoding: 'utf8' });
 if (remotes.split('\n').includes('personal')) expectRemote('personal', 'https://github.com/cyjoon68/pickfit-workspace');
 for (const name of ['pickfit-fe', 'pickfit-be']) {
